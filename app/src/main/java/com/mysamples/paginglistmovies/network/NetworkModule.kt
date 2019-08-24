@@ -24,7 +24,7 @@ object NetworkModule {
     private const val RW_TIMEOUT = 30L
 
 
-    fun tvShowsApiService(): TvShowApiInteraface? {
+    fun tvShowsApiService(): TvShowApiInteraface {
         val httpClient =
             provideLoggingCapableHttpClient(provideLoggingInterceptor(), ApiKeyInterceptor())
         val converterFactory = provideConverterFactory()
