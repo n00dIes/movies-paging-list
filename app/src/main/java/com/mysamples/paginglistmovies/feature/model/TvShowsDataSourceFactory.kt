@@ -4,7 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.paging.DataSource
 
 
-class TvShowsDataSourceFactory(private val tvShowDataSource: TvShowsDataSource) :
+class TvShowsDataSourceFactory(val tvShowDataSource: TvShowsDataSource) :
     DataSource.Factory<Int, TvShow>() {
 
     private val tvShowsDataSourceLiveData = MutableLiveData<TvShowsDataSource>()

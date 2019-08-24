@@ -7,7 +7,7 @@ import io.reactivex.disposables.CompositeDisposable
 
 
 class TvShowsDataSource(
-    private val apiInteraface: TvShowApiInteraface,
+    private val apiInterface: TvShowApiInteraface,
     private val mapper: TvShowMapper,
     private val io: Scheduler,
     private val main: Scheduler
@@ -23,7 +23,7 @@ class TvShowsDataSource(
         params: LoadInitialParams<Int>, callback: LoadInitialCallback<TvShow>
     ) {
         compositeDisposable.add(
-            apiInteraface.getPopular(params.requestedInitialKey?.let { it } ?: pageNumber)
+            apiInterface.getPopular(params.requestedInitialKey?.let { it } ?: pageNumber)
                 .subscribeOn(io)
                 .map { response -> mapper.map(response.results) }
                 .observeOn(main)
@@ -38,7 +38,7 @@ class TvShowsDataSource(
 
     override fun loadAfter(params: LoadParams<Int>, callback: LoadCallback<TvShow>) {
         compositeDisposable.add(
-            apiInteraface.getPopular(params.key)
+            apiInterface.getPopular(params.key)
                 .subscribeOn(io)
                 .map { response -> mapper.map(response.results) }
                 .observeOn(main)
