@@ -4,10 +4,10 @@ data class PopularTvShowResponse(
     val page: Int,
     val total_result: Int,
     val total_pages: Int,
-    val results: List<TvShows>
+    val results: List<TvShowModel>
 )
 
-data class TvShows(
+data class TvShowModel(
     val original_name: String,
     val id: Int,
     val name: String,

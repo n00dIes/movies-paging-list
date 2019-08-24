@@ -14,16 +14,19 @@ object NetworkModule {
 
     private const val HOST_BASE_URL = "https://api.themoviedb.org"
     private const val VERSION = 3
+    private const val IMAGE_SIZE = 200
 
-    const val API_BASE_URL = "$HOST_BASE_URL + $VERSION"
-    const val IMG_BASE_URL = "https://image.tmdb.org/t/p/w"
+    const val API_BASE_URL = "$HOST_BASE_URL/$VERSION/"
+    const val IMG_BASE_URL = "https://image.tmdb.org/t/p/w$IMAGE_SIZE"
+    const val API_KEY_QUERY_PARAM = "api_key"
 
     private const val CONNECTION_TIMEOUT_SEC = 10L
     private const val RW_TIMEOUT = 30L
 
 
-    fun TvShowsApiService(): TvShowApiInteraface? {
-        val httpClient = provideLoggingCapableHttpClient(provideLoggingInterceptor())
+    fun tvShowsApiService(): TvShowApiInteraface? {
+        val httpClient =
+            provideLoggingCapableHttpClient(provideLoggingInterceptor(), ApiKeyInterceptor())
         val converterFactory = provideConverterFactory()
         val rxJavaCallAdapterFactory = provideRxJavaCallAdapterFactory()
 
@@ -46,12 +49,16 @@ object NetworkModule {
         }
 
 
-    private fun provideLoggingCapableHttpClient(loggingInterceptor: HttpLoggingInterceptor) =
+    private fun provideLoggingCapableHttpClient(
+        loggingInterceptor: HttpLoggingInterceptor,
+        apiKeyInterceptor: ApiKeyInterceptor
+    ) =
         OkHttpClient.Builder()
             .connectTimeout(CONNECTION_TIMEOUT_SEC, TimeUnit.SECONDS)
             .readTimeout(RW_TIMEOUT, TimeUnit.SECONDS)
             .writeTimeout(RW_TIMEOUT, TimeUnit.SECONDS)
             .addInterceptor(loggingInterceptor)
+            .addInterceptor(apiKeyInterceptor)
             .build()
 
 
