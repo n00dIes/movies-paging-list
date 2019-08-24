@@ -23,7 +23,7 @@ class TvShowsDataSource(
         params: LoadInitialParams<Int>, callback: LoadInitialCallback<TvShow>
     ) {
         compositeDisposable.add(
-            apiInteraface.getPopular(pageNumber)
+            apiInteraface.getPopular(params.requestedInitialKey?.let { it } ?: pageNumber)
                 .subscribeOn(io)
                 .map { response -> mapper.map(response.results) }
                 .observeOn(main)
@@ -38,7 +38,7 @@ class TvShowsDataSource(
 
     override fun loadAfter(params: LoadParams<Int>, callback: LoadCallback<TvShow>) {
         compositeDisposable.add(
-            apiInteraface.getPopular(pageNumber)
+            apiInteraface.getPopular(params.key)
                 .subscribeOn(io)
                 .map { response -> mapper.map(response.results) }
                 .observeOn(main)
