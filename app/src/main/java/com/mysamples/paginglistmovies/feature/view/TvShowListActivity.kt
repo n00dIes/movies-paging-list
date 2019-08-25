@@ -2,7 +2,6 @@ package com.mysamples.paginglistmovies.feature.view
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
@@ -28,6 +27,7 @@ class TvShowListActivity : AppCompatActivity() {
     }
 
     private fun initViews() {
+        swipe_to_refresh.setOnRefreshListener { viewModel.refresh() }
         recycler_view.layoutManager = LinearLayoutManager(this)
         recycler_view.adapter = adapter
     }
@@ -45,7 +45,7 @@ class TvShowListActivity : AppCompatActivity() {
                     setDataState(it)
                 }
                 DataState.PAGE_LOADING, DataState.SUCCESS -> setDataState(it)
-                else -> initial_progress.isVisible = true
+                else -> swipe_to_refresh.isRefreshing = true
             }
         })
 
@@ -58,7 +58,7 @@ class TvShowListActivity : AppCompatActivity() {
     }
 
     private fun setDataState(dataState: DataState) {
-        initial_progress.isVisible = false
+        swipe_to_refresh.isRefreshing = false
         adapter.setDataState(dataState)
     }
 

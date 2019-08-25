@@ -5,16 +5,18 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
+import com.mysamples.paginglistmovies.feature.model.DataState
 import com.mysamples.paginglistmovies.feature.model.TvShow
+import com.mysamples.paginglistmovies.feature.model.TvShowDataSource
 import com.mysamples.paginglistmovies.feature.model.TvShowDataSourceFactory
 import com.mysamples.paginglistmovies.mock
+import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock
-import org.mockito.Mockito.`when`
-import org.mockito.Mockito.verify
+import org.mockito.Mockito.*
 import org.mockito.junit.MockitoJUnitRunner
 
 
@@ -33,25 +35,58 @@ class TvShowViewModelTest {
     private lateinit var underTest: TvShowViewModel
 
     @Mock
-    private lateinit var observer: Observer<PagedList<TvShow>>
+    private lateinit var tvShowObserver: Observer<PagedList<TvShow>>
+
+    @Mock
+    private lateinit var dataStateObserver: Observer<DataState>
+
+    @Mock
+    private lateinit var dataSource: TvShowDataSource
+
+    private val dataSourceLiveData = MutableLiveData<TvShowDataSource>()
+    private val dataStateLiveDataState = MutableLiveData<DataState>()
 
     private val liveData = MutableLiveData<PagedList<TvShow>>()
 
+
     @Before
     fun setUp() {
-        `when`(pageListBuilder.build()).thenReturn(liveData)
+        mockViewModelInit()
 
         underTest = TvShowViewModel(factory, pageListBuilder)
+    }
 
+    @After
+    fun tearDown() {
+        underTest.tvShowLiveData().removeObserver(tvShowObserver)
+        underTest.dataLoadingState().removeObserver(dataStateObserver)
+
+        verifyNoMoreInteractions(tvShowObserver, dataStateObserver)
+    }
+
+    private fun mockViewModelInit() {
+        `when`(pageListBuilder.build()).thenReturn(liveData)
+        `when`(factory.tvShowDataSourceLiveData).thenReturn(dataSourceLiveData)
     }
 
     @Test
-    fun observeViewModel() {
+    fun observeTvShowLiveData() {
         val pagedList: PagedList<TvShow> = mock()
         liveData.value = pagedList
 
-        underTest.tvShowLiveData().observeForever(observer)
+        underTest.tvShowLiveData().observeForever(tvShowObserver)
 
-        verify(observer).onChanged(pagedList)
+        verify(tvShowObserver).onChanged(pagedList)
+    }
+
+    @Test
+    fun observeDataStateLiveData() {
+        `when`(dataSource.dataStateLiveData).thenReturn(dataStateLiveDataState)
+        dataSourceLiveData.value = dataSource
+        dataStateLiveDataState.value = DataState.PAGE_LOADING
+
+        underTest.dataLoadingState().observeForever(dataStateObserver)
+
+        verify(dataStateObserver).onChanged(DataState.PAGE_LOADING)
     }
 }

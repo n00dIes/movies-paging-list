@@ -1,9 +1,11 @@
 package com.mysamples.paginglistmovies.feature.viewmodel
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
+import com.mysamples.paginglistmovies.feature.model.DataState
 import com.mysamples.paginglistmovies.feature.model.TvShow
 import com.mysamples.paginglistmovies.feature.model.TvShowDataSourceFactory
 
@@ -14,26 +16,29 @@ class TvShowViewModel(
 ) : ViewModel() {
 
     private lateinit var showsLiveData: LiveData<PagedList<TvShow>>
-
-    fun tvShowLiveData() = showsLiveData
+    private lateinit var dataLoadingState: LiveData<DataState>
 
     init {
         initLiveData()
     }
 
     private fun initLiveData() {
+        dataLoadingState =
+            Transformations.switchMap(showDataSourceFactory.tvShowDataSourceLiveData) { dataSource -> dataSource.dataStateLiveData }
+
         showsLiveData = livePagedListBuilder.build()
     }
 
+    fun retry() = showDataSourceFactory.tvShowDataSourceLiveData.value?.retry()
+
+    fun refresh() = showDataSourceFactory.tvShowDataSourceLiveData.value?.clear()
+
+    fun tvShowLiveData() = showsLiveData
+
+    fun dataLoadingState() = dataLoadingState
+
     override fun onCleared() {
         super.onCleared()
-        showDataSourceFactory.tvShowDataSource.clear()
+        showDataSourceFactory.tvShowDataSourceLiveData.value?.clear()
     }
-
-    fun retry() {
-        showDataSourceFactory.tvShowDataSource.retry()
-    }
-
-    fun dataLoadingState() = showDataSourceFactory.tvShowDataSource.dataStateLiveData
-
 }
