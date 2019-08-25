@@ -16,7 +16,13 @@ object TvShowModule {
     private const val PAGE_SIZE = 20
     private const val INIT_LOAD_SIZE = PAGE_SIZE * 2
 
-    fun viewModel() = TvShowViewModel(dataSourceFactory(), livePagedListBuilder())
+    fun viewModel(): TvShowViewModel {
+        val dataSourceFactory = dataSourceFactory()
+        return TvShowViewModel(
+            dataSourceFactory,
+            livePagedListBuilder(dataSourceFactory)
+        )
+    }
 
     private fun dataSourceFactory() = TvShowsDataSourceFactory(dataSource())
 
@@ -27,8 +33,8 @@ object TvShowModule {
         AndroidSchedulers.mainThread()
     )
 
-    private fun livePagedListBuilder() =
-        LivePagedListBuilder(dataSourceFactory(), pagedListConfig())
+    private fun livePagedListBuilder(dataSourceFactory: TvShowsDataSourceFactory) =
+        LivePagedListBuilder(dataSourceFactory, pagedListConfig())
 
     private fun pagedListConfig() = PagedList.Config.Builder()
         .setPageSize(PAGE_SIZE)

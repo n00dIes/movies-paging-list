@@ -12,11 +12,11 @@ import java.util.concurrent.TimeUnit
 
 object NetworkModule {
 
-    private const val HOST_BASE_URL = "https://api.themoviedb.org"
-    private const val VERSION = 3
+    private const val HOST_BASE_URL = "https://api.themoviedb.org/"
+    private const val VERSION = "3"
     private const val IMAGE_SIZE = 200
 
-    const val API_BASE_URL = "$HOST_BASE_URL/$VERSION/"
+    const val API_BASE_URL = "$HOST_BASE_URL$VERSION/"
     const val IMG_BASE_URL = "https://image.tmdb.org/t/p/w$IMAGE_SIZE"
     const val API_KEY_QUERY_PARAM = "api_key"
 
