@@ -72,6 +72,7 @@ class TvShowDataSource(
     }
 
     fun clear() {
+        invalidate()
         compositeDisposable.clear()
         pageNumber = 1
     }
