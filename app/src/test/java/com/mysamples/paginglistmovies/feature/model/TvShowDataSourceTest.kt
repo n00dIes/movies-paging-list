@@ -18,12 +18,12 @@ import org.mockito.Mockito.*
 import org.mockito.junit.MockitoJUnitRunner
 
 @RunWith(MockitoJUnitRunner::class)
-class TvShowsDataSourceTest {
+class TvShowDataSourceTest {
 
     @get:Rule
     val rule = InstantTaskExecutorRule()
 
-    private lateinit var underTest: TvShowsDataSource
+    private lateinit var underTest: TvShowDataSource
 
     @Mock
     private lateinit var mapper: TvShowMapper
@@ -47,7 +47,7 @@ class TvShowsDataSourceTest {
     @Before
     fun setUp() {
 
-        underTest = TvShowsDataSource(
+        underTest = TvShowDataSource(
             apiInteraface,
             mapper,
             Schedulers.trampoline(),

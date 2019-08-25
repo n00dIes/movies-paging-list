@@ -3,8 +3,8 @@ package com.mysamples.paginglistmovies.feature
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
 import com.mysamples.paginglistmovies.feature.model.TvShowMapper
-import com.mysamples.paginglistmovies.feature.model.TvShowsDataSource
-import com.mysamples.paginglistmovies.feature.model.TvShowsDataSourceFactory
+import com.mysamples.paginglistmovies.feature.model.TvShowDataSource
+import com.mysamples.paginglistmovies.feature.model.TvShowDataSourceFactory
 import com.mysamples.paginglistmovies.feature.viewmodel.TvShowViewModel
 import com.mysamples.paginglistmovies.network.NetworkModule
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -24,16 +24,16 @@ object TvShowModule {
         )
     }
 
-    private fun dataSourceFactory() = TvShowsDataSourceFactory(dataSource())
+    private fun dataSourceFactory() = TvShowDataSourceFactory(dataSource())
 
-    private fun dataSource() = TvShowsDataSource(
+    private fun dataSource() = TvShowDataSource(
         NetworkModule.tvShowsApiService(),
         mapper(),
         Schedulers.io(),
         AndroidSchedulers.mainThread()
     )
 
-    private fun livePagedListBuilder(dataSourceFactory: TvShowsDataSourceFactory) =
+    private fun livePagedListBuilder(dataSourceFactory: TvShowDataSourceFactory) =
         LivePagedListBuilder(dataSourceFactory, pagedListConfig())
 
     private fun pagedListConfig() = PagedList.Config.Builder()

@@ -10,7 +10,7 @@ import io.reactivex.functions.Action
 
 private const val LOG_TAG = "TvShowsDataSource"
 
-class TvShowsDataSource(
+class TvShowDataSource(
     private val apiInterface: TvShowApiInteraface,
     private val mapper: TvShowMapper,
     private val io: Scheduler,

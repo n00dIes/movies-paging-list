@@ -5,11 +5,11 @@ import androidx.lifecycle.ViewModel
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
 import com.mysamples.paginglistmovies.feature.model.TvShow
-import com.mysamples.paginglistmovies.feature.model.TvShowsDataSourceFactory
+import com.mysamples.paginglistmovies.feature.model.TvShowDataSourceFactory
 
 
 class TvShowViewModel(
-    private val showsDataSourceFactory: TvShowsDataSourceFactory,
+    private val showDataSourceFactory: TvShowDataSourceFactory,
     private val livePagedListBuilder: LivePagedListBuilder<Int, TvShow>
 ) : ViewModel() {
 
@@ -27,13 +27,13 @@ class TvShowViewModel(
 
     override fun onCleared() {
         super.onCleared()
-        showsDataSourceFactory.tvShowDataSource.clear()
+        showDataSourceFactory.tvShowDataSource.clear()
     }
 
     fun retry() {
-        showsDataSourceFactory.tvShowDataSource.retry()
+        showDataSourceFactory.tvShowDataSource.retry()
     }
 
-    fun dataLoadingState() = showsDataSourceFactory.tvShowDataSource.dataStateLiveData
+    fun dataLoadingState() = showDataSourceFactory.tvShowDataSource.dataStateLiveData
 
 }

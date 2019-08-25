@@ -6,7 +6,7 @@ import androidx.lifecycle.Observer
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
 import com.mysamples.paginglistmovies.feature.model.TvShow
-import com.mysamples.paginglistmovies.feature.model.TvShowsDataSourceFactory
+import com.mysamples.paginglistmovies.feature.model.TvShowDataSourceFactory
 import com.mysamples.paginglistmovies.mock
 import org.junit.Before
 import org.junit.Rule
@@ -25,7 +25,7 @@ class TvShowViewModelTest {
     val rule = InstantTaskExecutorRule()
 
     @Mock
-    private lateinit var factory: TvShowsDataSourceFactory
+    private lateinit var factory: TvShowDataSourceFactory
 
     @Mock
     private lateinit var pageListBuilder: LivePagedListBuilder<Int, TvShow>
