@@ -1,6 +1,6 @@
 package com.mysamples.paginglistmovies.feature.model
 
 enum class DataState {
-    SUCCESS, ERROR, PAGE_LOADING, INIITIAL_LOADING
+    SUCCESS, ERROR, PAGE_LOADING, INITIAL_LOADING
 
 }
