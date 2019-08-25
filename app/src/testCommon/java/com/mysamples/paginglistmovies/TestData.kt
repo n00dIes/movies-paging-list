@@ -14,7 +14,7 @@ fun aTvShow() = TvShow(
     "Original Name",
     10,
     "Name",
-    1200F,
+    1200,
     7.2F,
     NetworkModule.IMG_BASE_URL + "/imageUrl",
     "Overview"

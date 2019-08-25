@@ -19,7 +19,7 @@ class TvShowMapper {
         item.original_name,
         item.id,
         item.name,
-        item.vote_count,
+        item.vote_count.toInt(),
         item.vote_average,
         NetworkModule.IMG_BASE_URL + item.poster_path,
         item.overview

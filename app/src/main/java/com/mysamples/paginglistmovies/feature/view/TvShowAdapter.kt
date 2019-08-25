@@ -65,9 +65,9 @@ class TvShowAdapter :
         fun bind(tvShow: TvShow?) {
             itemView.tv_show_name.text = tvShow?.name
             itemView.tv_show_overview.text = tvShow?.overview
+            itemView.tv_show_rating.text = tvShow?.voteAverage.toString()
             Picasso.get().load(tvShow?.imageUrl).into(itemView.movie_image)
         }
-
     }
 
     internal class ProgressViewHolder(view: View) : RecyclerView.ViewHolder(view)

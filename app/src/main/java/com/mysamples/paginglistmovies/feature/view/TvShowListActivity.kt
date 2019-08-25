@@ -52,8 +52,8 @@ class TvShowListActivity : AppCompatActivity() {
     }
 
     private fun showRetrySnackBar() {
-        Snackbar.make(root, "Error", Snackbar.LENGTH_INDEFINITE)
-            .setAction("RETRY") { viewModel.retry() }
+        Snackbar.make(root, getString(R.string.generic_error_message), Snackbar.LENGTH_INDEFINITE)
+            .setAction(getString(R.string.action_retry)) { viewModel.retry() }
             .show()
     }
 
