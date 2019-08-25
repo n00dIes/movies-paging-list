@@ -30,4 +30,10 @@ class TvShowViewModel(
         showsDataSourceFactory.tvShowDataSource.clear()
     }
 
+    fun retry() {
+        showsDataSourceFactory.tvShowDataSource.retry()
+    }
+
+    fun dataLoadingState() = showsDataSourceFactory.tvShowDataSource.dataStateLiveData
+
 }
