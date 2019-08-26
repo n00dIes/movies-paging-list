@@ -1,5 +1,5 @@
 # PagingListMovies
-PagingListMovies is sample app to showcase a simple endless list of [Popular TV Shows](https://developers.themoviedb.org/3/tv/get-popular-tv-shows) powered by [The Movie Database API](https://developers.themoviedb.org) using the [Android Paging Library](https://developer.android.com/topic/libraries/architecture/paging).
+PagingListMovies is a sample app to showcase a simple endless list of [Popular TV Shows](https://developers.themoviedb.org/3/tv/get-popular-tv-shows) powered by [The Movie Database API](https://developers.themoviedb.org) using the [Android Paging Library](https://developer.android.com/topic/libraries/architecture/paging).
 
 ## Features
 * Provides an endless list of Popular TV Shows
@@ -23,21 +23,25 @@ Clone this project from GitHub and import it in Android Studio as an existing An
 
 ### Architecture and Implementation
 The project is based on MVVM for the presentation layer + a data layer (the network module)
-* **View** - An Activity for user interaction handling and rendering. Delegates actions to the ViewModel.
+*  **View** - An Activity for user interaction handling and rendering. Delegates actions to the ViewModel.
 *  **ViewModel** - exposes the view states and operates on the DataSource to get data for the View.
 *  **Model** - this is where the business logic happens, data fetching, data mapping and error handling. In a more complex scenario could be integrated with a Repository pattern for introducing local storage. At the moment it fetches data only from the network repository.
 
 ## Design UI/UX
 The design is based on CardViews for a single item of the list (Title, Overview, Image and average rating).
+
 ![CardView](/screenshot/card.png)
 
 Swipe to Refresh for letting the user refresh data as well as providing ad initial loading state on an empty list.
+
 ![Swipe to Refresh](/screenshot/swipe_to_refresh.png)
 
 Loading State for next page loading. This should be shown only on slow connections since there is a pre-fetching mechanism.
+
 ![Loading](/screenshot/loading.png)
 
 Snackbar for error state with a Retry button for re-fetching the latest page.
+
 ![Snackbar](/screenshot/snackbar.png)
 
 ## License
